@@ -14,12 +14,12 @@ const rpcUrl = z
     message: 'must use the http:// or https:// scheme',
   });
 
-const integerString = (name: string, minimum: number) =>
+const integerString = (name: string, minimum: number, maximum = Number.MAX_SAFE_INTEGER) =>
   z
     .string()
     .regex(/^\d+$/, `${name} must be a base-10 integer`)
     .transform((value) => Number(value))
-    .pipe(z.number().int().min(minimum).safe());
+    .pipe(z.number().int().min(minimum).max(maximum).safe());
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
@@ -28,7 +28,7 @@ const envSchema = z.object({
   HYPEREVM_ARCHIVE_RPC_URL: rpcUrl,
   HYPEREVM_CHAIN_ID: integerString('HYPEREVM_CHAIN_ID', 1),
   CONFIRMATION_LAG: integerString('CONFIRMATION_LAG', 0),
-  LOG_BLOCK_CHUNK_SIZE: integerString('LOG_BLOCK_CHUNK_SIZE', 1),
+  LOG_BLOCK_CHUNK_SIZE: integerString('LOG_BLOCK_CHUNK_SIZE', 1, 50),
   LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
 });
 

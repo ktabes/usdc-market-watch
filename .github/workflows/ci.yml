@@ -31,7 +31,7 @@ jobs:
       HYPEREVM_ARCHIVE_RPC_URL: https://rpc.hyperlend.finance/archive
       HYPEREVM_CHAIN_ID: '999'
       CONFIRMATION_LAG: '20'
-      LOG_BLOCK_CHUNK_SIZE: '1000'
+      LOG_BLOCK_CHUNK_SIZE: '50'
       LOG_LEVEL: info
       RUN_NETWORK_INTEGRATION_TESTS: 'true'
     steps:

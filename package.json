@@ -11,6 +11,8 @@
     "build": "tsc -p tsconfig.build.json",
     "start": "tsx src/index.ts",
     "discover": "tsx src/cli.ts discover",
+    "backfill": "tsx src/cli.ts backfill",
+    "sync": "tsx src/cli.ts sync",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "vitest run test/unit test/fixtures",
     "test:integration": "vitest run test/integration",

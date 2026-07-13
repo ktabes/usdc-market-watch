@@ -150,12 +150,14 @@ export function decodeMarketEvent(input: {
 }
 
 export function isUsdcMarketEvent(event: NormalizedMarketEvent): boolean {
+  return isMarketEvent(event, marketCandidates.usdc);
+}
+
+export function isMarketEvent(event: NormalizedMarketEvent, underlyingAsset: Address): boolean {
   if (event.eventType === 'LiquidationCall') {
-    return (
-      event.debtAsset === marketCandidates.usdc || event.collateralAsset === marketCandidates.usdc
-    );
+    return event.debtAsset === underlyingAsset || event.collateralAsset === underlyingAsset;
   }
-  return event.reserve === marketCandidates.usdc;
+  return event.reserve === underlyingAsset;
 }
 
 export function normalizedEventToJson(event: NormalizedMarketEvent): Record<string, unknown> {

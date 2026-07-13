@@ -8,7 +8,7 @@ const validEnvironment: NodeJS.ProcessEnv = {
   HYPEREVM_ARCHIVE_RPC_URL: 'https://archive-rpc.example.test/evm',
   HYPEREVM_CHAIN_ID: '999',
   CONFIRMATION_LAG: '20',
-  LOG_BLOCK_CHUNK_SIZE: '1000',
+  LOG_BLOCK_CHUNK_SIZE: '50',
   LOG_LEVEL: 'info',
 };
 
@@ -21,7 +21,7 @@ describe('parseEnv', () => {
       hyperEvmArchiveRpcUrl: validEnvironment.HYPEREVM_ARCHIVE_RPC_URL,
       hyperEvmChainId: 999,
       confirmationLag: 20,
-      logBlockChunkSize: 1000,
+      logBlockChunkSize: 50,
       logLevel: 'info',
     });
   });
@@ -53,6 +53,7 @@ describe('parseEnv', () => {
     ['HYPEREVM_CHAIN_ID', '0'],
     ['CONFIRMATION_LAG', '-1'],
     ['LOG_BLOCK_CHUNK_SIZE', '1.5'],
+    ['LOG_BLOCK_CHUNK_SIZE', '51'],
     ['NODE_ENV', 'staging'],
     ['LOG_LEVEL', 'verbose'],
   ])('rejects malformed %s', (name, value) => {

@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX "market_events_raw_log_unique" ON "market_events" USING btree ("raw_log_id");

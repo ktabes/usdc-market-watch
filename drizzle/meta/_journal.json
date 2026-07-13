@@ -8,6 +8,27 @@
       "when": 1783959809093,
       "tag": "0000_phase0_bootstrap",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1783971608246,
+      "tag": "0001_neat_dazzler",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1783971969187,
+      "tag": "0002_messy_molten_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1783972309330,
+      "tag": "0003_noisy_trauma",
+      "breakpoints": true
     }
   ]
 }

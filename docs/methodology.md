@@ -56,6 +56,12 @@ Phase 1 records real network logs as immutable fixture inputs so decoding remain
 
 The authoritative address relationships, ABI provenance, normalized event contract, units, formulas, rounding policy, and recorded fixtures are defined in the [Phase 1 protocol specification](protocol/phase-1-specification.md). Source precedence is pinned-block state first, then onchain registries and back-references, then official documentation candidates. The HyperLend HTTP API is secondary and is not required for discovery or correctness.
 
+## Phase 2 indexing methodology
+
+Phase 2 uses direct archive JSON-RPC with inclusive chunks of at most 50 blocks. Filtering occurs twice: RPC address/topic restriction, then manifest-USDC event semantics. Raw identity is `(chain_id, transaction_hash, log_index)`; an exact replay is a duplicate while conflicting content is an integrity failure.
+
+Chunk persistence, checkpoint advancement, and run counters are one transaction. Checkpoints preserve the finalized block hash and are verified before resume. Backfills use interval-specific checkpoints; sync uses a canonical manifest checkpoint and confirmation lag. See [Indexing operations](indexing.md) for command and failure semantics.
+
 ## Evidence conventions
 
 Evidence records include the date, repository state, exact commands, pass/fail/skip counts, review findings, fixes, and known limitations. A skipped external integration is never described as a pass. Live or network-derived evidence must identify its pinned block or observation time when introduced in later phases.
