@@ -60,6 +60,12 @@ The authoritative address relationships, ABI provenance, normalized event contra
 
 Phase 2 uses direct archive JSON-RPC with inclusive chunks of at most 50 blocks. Filtering occurs twice: RPC address/topic restriction, then manifest-USDC event semantics. Raw identity is `(chain_id, transaction_hash, log_index)`; an exact replay is a duplicate while conflicting content is an integrity failure.
 
+## Phase 3 derivation methodology
+
+Phase 3 treats the Phase 2 source tables as immutable evidence. Hourly flows are pure integer calculations rebuilt from normalized events in one database transaction. Every bucket retains the inclusive source block range, source event count, manifest ID, UTC-hour timestamp, and calculation version. Rebuilds replace the complete selected calculation version so reruns cannot accumulate derived rows.
+
+Market snapshots use direct archive-RPC reads at one finalized block. Physical liquidity, virtual balance, hToken supply, variable debt, reserve accounting fields, raw rates, and indexes are stored without display rounding. Utilization uses the Phase 1 half-up ray formula with the rate-model virtual balance. Each snapshot retains block/hash/time, all source contract addresses, Pool implementation, ABI version, calculation version, and a deterministic content hash. Cross-contract disagreements or unsupported stable-debt state fail closed.
+
 Chunk persistence, checkpoint advancement, and run counters are one transaction. Checkpoints preserve the finalized block hash and are verified before resume. Backfills use interval-specific checkpoints; sync uses a canonical manifest checkpoint and confirmation lag. See [Indexing operations](indexing.md) for command and failure semantics.
 
 ## Evidence conventions

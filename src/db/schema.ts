@@ -2,6 +2,8 @@ import {
   bigserial,
   bigint,
   boolean,
+  foreignKey,
+  index,
   integer,
   jsonb,
   numeric,
@@ -183,4 +185,165 @@ export const ingestionFailures = pgTable(
     createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
   },
   (table) => [check('ingestion_failures_attempts_positive', sql`${table.attempts} > 0`)],
+);
+
+export const hourlyFlowAggregates = pgTable(
+  'hourly_flow_aggregates',
+  {
+    id: bigserial('id', { mode: 'number' }).primaryKey(),
+    chainId: integer('chain_id').notNull(),
+    manifestId: text('manifest_id').notNull(),
+    hourStartTimestamp: blockNumber('hour_start_timestamp').notNull(),
+    sourceFromBlock: blockNumber('source_from_block').notNull(),
+    sourceToBlock: blockNumber('source_to_block').notNull(),
+    sourceEventCount: integer('source_event_count').notNull(),
+    supplyCount: integer('supply_count').notNull(),
+    withdrawCount: integer('withdraw_count').notNull(),
+    borrowCount: integer('borrow_count').notNull(),
+    repayCount: integer('repay_count').notNull(),
+    liquidationCount: integer('liquidation_count').notNull(),
+    supplyBaseUnits: uint256('supply_base_units').notNull(),
+    withdrawBaseUnits: uint256('withdraw_base_units').notNull(),
+    borrowBaseUnits: uint256('borrow_base_units').notNull(),
+    repayBaseUnits: uint256('repay_base_units').notNull(),
+    liquidationDebtRepaidBaseUnits: uint256('liquidation_debt_repaid_base_units').notNull(),
+    liquidationCollateralOutflowBaseUnits: uint256(
+      'liquidation_collateral_outflow_base_units',
+    ).notNull(),
+    userNetSupplyBaseUnits: numeric('user_net_supply_base_units', {
+      precision: 78,
+      scale: 0,
+      mode: 'bigint',
+    }).notNull(),
+    netVariableDebtPrincipalBaseUnits: numeric('net_variable_debt_principal_base_units', {
+      precision: 78,
+      scale: 0,
+      mode: 'bigint',
+    }).notNull(),
+    hTokenPrincipalDeltaBaseUnits: numeric('h_token_principal_delta_base_units', {
+      precision: 78,
+      scale: 0,
+      mode: 'bigint',
+    }).notNull(),
+    underlyingLiquidityPrincipalDeltaBaseUnits: numeric(
+      'underlying_liquidity_principal_delta_base_units',
+      { precision: 78, scale: 0, mode: 'bigint' },
+    ).notNull(),
+    calculationVersion: text('calculation_version').notNull(),
+    calculatedAt: timestamp('calculated_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('hourly_flows_identity_unique').on(
+      table.chainId,
+      table.manifestId,
+      table.hourStartTimestamp,
+      table.calculationVersion,
+    ),
+    index('hourly_flows_time_index').on(table.chainId, table.hourStartTimestamp),
+    check('hourly_flows_chain_positive', sql`${table.chainId} > 0`),
+    check(
+      'hourly_flows_hour_aligned',
+      sql`${table.hourStartTimestamp} >= 0 and mod(${table.hourStartTimestamp}, 3600) = 0`,
+    ),
+    check(
+      'hourly_flows_source_range_valid',
+      sql`${table.sourceFromBlock} >= 0 and ${table.sourceToBlock} >= ${table.sourceFromBlock}`,
+    ),
+    check(
+      'hourly_flows_counts_valid',
+      sql`${table.sourceEventCount} > 0 and
+          ${table.supplyCount} >= 0 and ${table.withdrawCount} >= 0 and
+          ${table.borrowCount} >= 0 and ${table.repayCount} >= 0 and
+          ${table.liquidationCount} >= 0 and
+          ${table.sourceEventCount} = ${table.supplyCount} + ${table.withdrawCount} +
+            ${table.borrowCount} + ${table.repayCount} + ${table.liquidationCount}`,
+    ),
+    check(
+      'hourly_flows_amounts_nonnegative',
+      sql`${table.supplyBaseUnits} >= 0 and ${table.withdrawBaseUnits} >= 0 and
+          ${table.borrowBaseUnits} >= 0 and ${table.repayBaseUnits} >= 0 and
+          ${table.liquidationDebtRepaidBaseUnits} >= 0 and
+          ${table.liquidationCollateralOutflowBaseUnits} >= 0`,
+    ),
+  ],
+);
+
+export const marketSnapshots = pgTable(
+  'market_snapshots',
+  {
+    id: bigserial('id', { mode: 'number' }).primaryKey(),
+    chainId: integer('chain_id').notNull(),
+    manifestId: text('manifest_id').notNull(),
+    blockNumber: blockNumber('block_number').notNull(),
+    blockHash: text('block_hash').notNull(),
+    blockTimestamp: blockNumber('block_timestamp').notNull(),
+    poolAddress: text('pool_address').notNull(),
+    poolImplementationAddress: text('pool_implementation_address').notNull(),
+    protocolDataProviderAddress: text('protocol_data_provider_address').notNull(),
+    underlyingAddress: text('underlying_address').notNull(),
+    hTokenAddress: text('h_token_address').notNull(),
+    variableDebtTokenAddress: text('variable_debt_token_address').notNull(),
+    physicalAvailableLiquidityBaseUnits: uint256(
+      'physical_available_liquidity_base_units',
+    ).notNull(),
+    virtualUnderlyingBalanceBaseUnits: uint256('virtual_underlying_balance_base_units').notNull(),
+    totalHTokenSupplyBaseUnits: uint256('total_h_token_supply_base_units').notNull(),
+    totalVariableDebtBaseUnits: uint256('total_variable_debt_base_units').notNull(),
+    totalStableDebtBaseUnits: uint256('total_stable_debt_base_units').notNull(),
+    unbackedBaseUnits: uint256('unbacked_base_units').notNull(),
+    accruedToTreasuryScaledBaseUnits: uint256('accrued_to_treasury_scaled_base_units').notNull(),
+    deficitBaseUnits: uint256('deficit_base_units').notNull(),
+    liquidityRateRay: uint256('liquidity_rate_ray').notNull(),
+    variableBorrowRateRay: uint256('variable_borrow_rate_ray').notNull(),
+    liquidityIndexRay: uint256('liquidity_index_ray').notNull(),
+    variableBorrowIndexRay: uint256('variable_borrow_index_ray').notNull(),
+    utilizationRay: uint256('utilization_ray').notNull(),
+    reserveLastUpdateTimestamp: blockNumber('reserve_last_update_timestamp').notNull(),
+    reserveFactorBps: integer('reserve_factor_bps').notNull(),
+    borrowingEnabled: boolean('borrowing_enabled').notNull(),
+    stableBorrowRateEnabled: boolean('stable_borrow_rate_enabled').notNull(),
+    isActive: boolean('is_active').notNull(),
+    isFrozen: boolean('is_frozen').notNull(),
+    abiVersion: text('abi_version').notNull(),
+    calculationVersion: text('calculation_version').notNull(),
+    contentHash: text('content_hash').notNull(),
+    capturedAt: timestamp('captured_at', { withTimezone: true }).notNull().defaultNow(),
+  },
+  (table) => [
+    uniqueIndex('market_snapshots_identity_unique').on(
+      table.chainId,
+      table.blockNumber,
+      table.calculationVersion,
+    ),
+    index('market_snapshots_latest_index').on(table.chainId, table.blockNumber),
+    foreignKey({
+      columns: [table.chainId, table.blockNumber],
+      foreignColumns: [blocks.chainId, blocks.blockNumber],
+      name: 'market_snapshots_block_fk',
+    }),
+    check('market_snapshots_chain_positive', sql`${table.chainId} > 0`),
+    check('market_snapshots_block_nonnegative', sql`${table.blockNumber} >= 0`),
+    check(
+      'market_snapshots_state_nonnegative',
+      sql`${table.blockTimestamp} >= 0 and
+          ${table.physicalAvailableLiquidityBaseUnits} >= 0 and
+          ${table.virtualUnderlyingBalanceBaseUnits} >= 0 and
+          ${table.totalHTokenSupplyBaseUnits} >= 0 and
+          ${table.totalVariableDebtBaseUnits} >= 0 and
+          ${table.totalStableDebtBaseUnits} >= 0 and ${table.unbackedBaseUnits} >= 0 and
+          ${table.accruedToTreasuryScaledBaseUnits} >= 0 and ${table.deficitBaseUnits} >= 0 and
+          ${table.liquidityRateRay} >= 0 and ${table.variableBorrowRateRay} >= 0 and
+          ${table.liquidityIndexRay} >= 0 and ${table.variableBorrowIndexRay} >= 0 and
+          ${table.reserveLastUpdateTimestamp} >= 0`,
+    ),
+    check(
+      'market_snapshots_utilization_valid',
+      sql`${table.utilizationRay} >= 0 and ${table.utilizationRay} <= 1000000000000000000000000000`,
+    ),
+    check(
+      'market_snapshots_configuration_valid',
+      sql`${table.reserveFactorBps} >= 0 and ${table.reserveFactorBps} <= 10000`,
+    ),
+    check('market_snapshots_content_hash_valid', sql`char_length(${table.contentHash}) = 64`),
+  ],
 );

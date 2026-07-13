@@ -2,9 +2,9 @@
 
 An auditable onchain data system for the single USDC core lending market on HyperLend / HyperEVM. The project prioritizes correctness, provenance, idempotency, and recoverability over breadth or presentation.
 
-**Phase 0 — Bootstrap and guardrails**, **Phase 1 — Protocol discovery and executable specification**, and **Phase 2 — Viable, reliable indexer** are approved. Derived snapshots, reconciliation, and any interface remain deferred to their separately gated phases.
+**Phase 0 — Bootstrap and guardrails**, **Phase 1 — Protocol discovery and executable specification**, and **Phase 2 — Viable, reliable indexer** are approved. **Phase 3 — Data model and derived snapshots** is implemented and under gate review. Reconciliation and any interface remain deferred.
 
-## Phase 0-2 contents
+## Phase 0-3 contents
 
 - TypeScript on Node.js 22 with strict compiler settings.
 - npm lockfile and reproducible `npm ci` installation.
@@ -17,6 +17,7 @@ An auditable onchain data system for the single USDC core lending market on Hype
 - Pinned-block HyperLend USDC market discovery with fail-closed validation.
 - Versioned ABI provenance, machine-readable manifest, exact bigint formulas, and five real-log fixtures.
 - Fifty-block RPC range planning, bounded retry, finalized checkpoints, resumable backfill/sync, immutable raw logs, normalized events, and run/failure diagnostics.
+- Rebuildable hourly flow aggregates, authoritative block-pinned market snapshots, explicit calculation provenance, and exact read-only analytics queries.
 
 ## Requirements
 
@@ -42,21 +43,25 @@ The project also has a deterministic migration test powered by an embedded Postg
 
 ## Commands
 
-| Command                                               | Purpose                                                                      |
-| ----------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `npm test`                                            | Run unit and integration suites.                                             |
-| `npm run test:unit`                                   | Run deterministic unit tests.                                                |
-| `npm run test:integration`                            | Run migration smoke tests and, when enabled, real PostgreSQL tests.          |
-| `npm run lint`                                        | Run ESLint.                                                                  |
-| `npm run typecheck`                                   | Type-check all source, scripts, config, and tests.                           |
-| `npm run build`                                       | Compile production source to `dist/`.                                        |
-| `npm run check`                                       | Run formatting, linting, type checking, build, secret checks, and all tests. |
-| `npm run db:generate`                                 | Generate a migration after an intentional schema change.                     |
-| `npm run db:migrate`                                  | Apply committed migrations and verify database connectivity.                 |
-| `npm run db:studio`                                   | Open Drizzle Studio for local inspection.                                    |
-| `npm run discover -- --block <n>`                     | Validate the market at a pinned archive block and emit its manifest.         |
-| `npm run backfill -- --from-block <a> --to-block <b>` | Index one finalized historical interval.                                     |
-| `npm run sync`                                        | Resume through the current confirmation-lagged finalized head.               |
+| Command                                                    | Purpose                                                                      |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `npm test`                                                 | Run unit and integration suites.                                             |
+| `npm run test:unit`                                        | Run deterministic unit tests.                                                |
+| `npm run test:integration`                                 | Run migration smoke tests and, when enabled, real PostgreSQL tests.          |
+| `npm run lint`                                             | Run ESLint.                                                                  |
+| `npm run typecheck`                                        | Type-check all source, scripts, config, and tests.                           |
+| `npm run build`                                            | Compile production source to `dist/`.                                        |
+| `npm run check`                                            | Run formatting, linting, type checking, build, secret checks, and all tests. |
+| `npm run db:generate`                                      | Generate a migration after an intentional schema change.                     |
+| `npm run db:migrate`                                       | Apply committed migrations and verify database connectivity.                 |
+| `npm run db:studio`                                        | Open Drizzle Studio for local inspection.                                    |
+| `npm run discover -- --block <n>`                          | Validate the market at a pinned archive block and emit its manifest.         |
+| `npm run backfill -- --from-block <a> --to-block <b>`      | Index one finalized historical interval.                                     |
+| `npm run sync`                                             | Resume through the current confirmation-lagged finalized head.               |
+| `npm run snapshot -- --block <n>`                          | Capture authoritative market state at one finalized block.                   |
+| `npm run rebuild:flows`                                    | Atomically rebuild all hourly flow buckets from immutable events.            |
+| `npm run state`                                            | Read the latest exact market snapshot.                                       |
+| `npm run flows -- --from-timestamp <a> --to-timestamp <b>` | Read inclusive hourly flow buckets by Unix timestamp.                        |
 
 ## Migration workflow
 
@@ -85,7 +90,9 @@ Store any owner-supplied transaction CSVs or wallet lists under the ignored `.pr
 - [Phase 1 gate evidence](docs/evidence/phase-1.md)
 - [Phase 2 indexing operations](docs/indexing.md)
 - [Phase 2 gate evidence](docs/evidence/phase-2.md)
+- [Phase 3 analytics and snapshots](docs/analytics.md)
+- [Phase 3 gate evidence](docs/evidence/phase-3.md)
 
 ## Current boundary
 
-The versioned manifest records the verified HyperLend core-pool USDC configuration at block `40367898`; it is evidence for that pinned block, not a promise that proxy implementations never change. Phase 2 is approved, so Phase 3 may begin as a separate scoped change. Phase 5 remains blocked until the mandatory Phase 4 owner review.
+The versioned manifest records the verified HyperLend core-pool USDC configuration at block `40367898`; it is evidence for that pinned block, not a promise that proxy implementations never change. Phase 3 remains under gate review, so Phase 4 is blocked. Phase 5 remains blocked until the mandatory Phase 4 owner review.

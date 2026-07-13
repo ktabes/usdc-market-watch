@@ -1,0 +1,1280 @@
+{
+  "id": "4e61b8d4-1c8e-4519-b0f5-d77a125d1a1e",
+  "prevId": "4b53cec0-4e2d-4eab-9fd9-6964f8cdfa6d",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.blocks": {
+      "name": "blocks",
+      "schema": "",
+      "columns": {
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_number": {
+          "name": "block_number",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_hash": {
+          "name": "block_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_timestamp": {
+          "name": "block_timestamp",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inserted_at": {
+          "name": "inserted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "blocks_chain_id_block_number_pk": {
+          "name": "blocks_chain_id_block_number_pk",
+          "columns": [
+            "chain_id",
+            "block_number"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "blocks_chain_positive": {
+          "name": "blocks_chain_positive",
+          "value": "\"blocks\".\"chain_id\" > 0"
+        },
+        "blocks_number_nonnegative": {
+          "name": "blocks_number_nonnegative",
+          "value": "\"blocks\".\"block_number\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.hourly_flow_aggregates": {
+      "name": "hourly_flow_aggregates",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "manifest_id": {
+          "name": "manifest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "hour_start_timestamp": {
+          "name": "hour_start_timestamp",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_from_block": {
+          "name": "source_from_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_to_block": {
+          "name": "source_to_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_event_count": {
+          "name": "source_event_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "supply_count": {
+          "name": "supply_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "withdraw_count": {
+          "name": "withdraw_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "borrow_count": {
+          "name": "borrow_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "repay_count": {
+          "name": "repay_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liquidation_count": {
+          "name": "liquidation_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "supply_base_units": {
+          "name": "supply_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "withdraw_base_units": {
+          "name": "withdraw_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "borrow_base_units": {
+          "name": "borrow_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "repay_base_units": {
+          "name": "repay_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liquidation_debt_repaid_base_units": {
+          "name": "liquidation_debt_repaid_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liquidation_collateral_outflow_base_units": {
+          "name": "liquidation_collateral_outflow_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "user_net_supply_base_units": {
+          "name": "user_net_supply_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "net_variable_debt_principal_base_units": {
+          "name": "net_variable_debt_principal_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "h_token_principal_delta_base_units": {
+          "name": "h_token_principal_delta_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "underlying_liquidity_principal_delta_base_units": {
+          "name": "underlying_liquidity_principal_delta_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calculation_version": {
+          "name": "calculation_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calculated_at": {
+          "name": "calculated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "hourly_flows_identity_unique": {
+          "name": "hourly_flows_identity_unique",
+          "columns": [
+            {
+              "expression": "chain_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "manifest_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "hour_start_timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "calculation_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "hourly_flows_time_index": {
+          "name": "hourly_flows_time_index",
+          "columns": [
+            {
+              "expression": "chain_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "hour_start_timestamp",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "hourly_flows_chain_positive": {
+          "name": "hourly_flows_chain_positive",
+          "value": "\"hourly_flow_aggregates\".\"chain_id\" > 0"
+        },
+        "hourly_flows_hour_aligned": {
+          "name": "hourly_flows_hour_aligned",
+          "value": "\"hourly_flow_aggregates\".\"hour_start_timestamp\" >= 0 and mod(\"hourly_flow_aggregates\".\"hour_start_timestamp\", 3600) = 0"
+        },
+        "hourly_flows_source_range_valid": {
+          "name": "hourly_flows_source_range_valid",
+          "value": "\"hourly_flow_aggregates\".\"source_from_block\" >= 0 and \"hourly_flow_aggregates\".\"source_to_block\" >= \"hourly_flow_aggregates\".\"source_from_block\""
+        },
+        "hourly_flows_counts_valid": {
+          "name": "hourly_flows_counts_valid",
+          "value": "\"hourly_flow_aggregates\".\"source_event_count\" > 0 and\n          \"hourly_flow_aggregates\".\"supply_count\" >= 0 and \"hourly_flow_aggregates\".\"withdraw_count\" >= 0 and\n          \"hourly_flow_aggregates\".\"borrow_count\" >= 0 and \"hourly_flow_aggregates\".\"repay_count\" >= 0 and\n          \"hourly_flow_aggregates\".\"liquidation_count\" >= 0 and\n          \"hourly_flow_aggregates\".\"source_event_count\" = \"hourly_flow_aggregates\".\"supply_count\" + \"hourly_flow_aggregates\".\"withdraw_count\" +\n            \"hourly_flow_aggregates\".\"borrow_count\" + \"hourly_flow_aggregates\".\"repay_count\" + \"hourly_flow_aggregates\".\"liquidation_count\""
+        },
+        "hourly_flows_amounts_nonnegative": {
+          "name": "hourly_flows_amounts_nonnegative",
+          "value": "\"hourly_flow_aggregates\".\"supply_base_units\" >= 0 and \"hourly_flow_aggregates\".\"withdraw_base_units\" >= 0 and\n          \"hourly_flow_aggregates\".\"borrow_base_units\" >= 0 and \"hourly_flow_aggregates\".\"repay_base_units\" >= 0 and\n          \"hourly_flow_aggregates\".\"liquidation_debt_repaid_base_units\" >= 0 and\n          \"hourly_flow_aggregates\".\"liquidation_collateral_outflow_base_units\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.indexer_checkpoints": {
+      "name": "indexer_checkpoints",
+      "schema": "",
+      "columns": {
+        "checkpoint_key": {
+          "name": "checkpoint_key",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "manifest_id": {
+          "name": "manifest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "next_block": {
+          "name": "next_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "finalized_block_number": {
+          "name": "finalized_block_number",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "finalized_block_hash": {
+          "name": "finalized_block_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "confirmation_lag": {
+          "name": "confirmation_lag",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "indexer_checkpoints_lag_nonnegative": {
+          "name": "indexer_checkpoints_lag_nonnegative",
+          "value": "\"indexer_checkpoints\".\"confirmation_lag\" >= 0"
+        },
+        "indexer_checkpoints_next_is_successor": {
+          "name": "indexer_checkpoints_next_is_successor",
+          "value": "\"indexer_checkpoints\".\"next_block\" = \"indexer_checkpoints\".\"finalized_block_number\" + 1"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.indexer_runs": {
+      "name": "indexer_runs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "command": {
+          "name": "command",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "checkpoint_key": {
+          "name": "checkpoint_key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "manifest_id": {
+          "name": "manifest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requested_from_block": {
+          "name": "requested_from_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "requested_to_block": {
+          "name": "requested_to_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "finalized_head_block": {
+          "name": "finalized_head_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "ranges_completed": {
+          "name": "ranges_completed",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "logs_fetched": {
+          "name": "logs_fetched",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "decoded_count": {
+          "name": "decoded_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "filtered_count": {
+          "name": "filtered_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "inserted_count": {
+          "name": "inserted_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "duplicate_count": {
+          "name": "duplicate_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "failure_count": {
+          "name": "failure_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "default": 0
+        },
+        "failure_detail": {
+          "name": "failure_detail",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "started_at": {
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "finished_at": {
+          "name": "finished_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "indexer_runs_command_valid": {
+          "name": "indexer_runs_command_valid",
+          "value": "\"indexer_runs\".\"command\" in ('backfill', 'sync')"
+        },
+        "indexer_runs_status_valid": {
+          "name": "indexer_runs_status_valid",
+          "value": "\"indexer_runs\".\"status\" in ('running', 'completed', 'failed')"
+        },
+        "indexer_runs_counters_nonnegative": {
+          "name": "indexer_runs_counters_nonnegative",
+          "value": "\"indexer_runs\".\"ranges_completed\" >= 0 and \"indexer_runs\".\"logs_fetched\" >= 0 and\n          \"indexer_runs\".\"decoded_count\" >= 0 and \"indexer_runs\".\"filtered_count\" >= 0 and\n          \"indexer_runs\".\"inserted_count\" >= 0 and \"indexer_runs\".\"duplicate_count\" >= 0 and\n          \"indexer_runs\".\"failure_count\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.ingestion_failures": {
+      "name": "ingestion_failures",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "run_id": {
+          "name": "run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "from_block": {
+          "name": "from_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "to_block": {
+          "name": "to_block",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "classification": {
+          "name": "classification",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "retryable": {
+          "name": "retryable",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "attempts": {
+          "name": "attempts",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "message": {
+          "name": "message",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "ingestion_failures_run_id_indexer_runs_id_fk": {
+          "name": "ingestion_failures_run_id_indexer_runs_id_fk",
+          "tableFrom": "ingestion_failures",
+          "tableTo": "indexer_runs",
+          "columnsFrom": [
+            "run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "ingestion_failures_attempts_positive": {
+          "name": "ingestion_failures_attempts_positive",
+          "value": "\"ingestion_failures\".\"attempts\" > 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.market_events": {
+      "name": "market_events",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "raw_log_id": {
+          "name": "raw_log_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "event_type": {
+          "name": "event_type",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reserve": {
+          "name": "reserve",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "collateral_asset": {
+          "name": "collateral_asset",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "debt_asset": {
+          "name": "debt_asset",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "user_address": {
+          "name": "user_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "on_behalf_of": {
+          "name": "on_behalf_of",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "counterparty": {
+          "name": "counterparty",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "amount_base_units": {
+          "name": "amount_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "debt_to_cover_base_units": {
+          "name": "debt_to_cover_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "liquidated_collateral_base_units": {
+          "name": "liquidated_collateral_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "borrow_rate_ray": {
+          "name": "borrow_rate_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "interest_rate_mode": {
+          "name": "interest_rate_mode",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "referral_code": {
+          "name": "referral_code",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "use_atokens": {
+          "name": "use_atokens",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "receive_atoken": {
+          "name": "receive_atoken",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "inserted_at": {
+          "name": "inserted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "market_events_raw_log_unique": {
+          "name": "market_events_raw_log_unique",
+          "columns": [
+            {
+              "expression": "raw_log_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "market_events_raw_log_id_raw_logs_id_fk": {
+          "name": "market_events_raw_log_id_raw_logs_id_fk",
+          "tableFrom": "market_events",
+          "tableTo": "raw_logs",
+          "columnsFrom": [
+            "raw_log_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "market_events_type_valid": {
+          "name": "market_events_type_valid",
+          "value": "\"market_events\".\"event_type\" in ('Supply', 'Withdraw', 'Borrow', 'Repay', 'LiquidationCall')"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.market_snapshots": {
+      "name": "market_snapshots",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "manifest_id": {
+          "name": "manifest_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_number": {
+          "name": "block_number",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_hash": {
+          "name": "block_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_timestamp": {
+          "name": "block_timestamp",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pool_address": {
+          "name": "pool_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "pool_implementation_address": {
+          "name": "pool_implementation_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "protocol_data_provider_address": {
+          "name": "protocol_data_provider_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "underlying_address": {
+          "name": "underlying_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "h_token_address": {
+          "name": "h_token_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variable_debt_token_address": {
+          "name": "variable_debt_token_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "physical_available_liquidity_base_units": {
+          "name": "physical_available_liquidity_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "virtual_underlying_balance_base_units": {
+          "name": "virtual_underlying_balance_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_h_token_supply_base_units": {
+          "name": "total_h_token_supply_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_variable_debt_base_units": {
+          "name": "total_variable_debt_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "total_stable_debt_base_units": {
+          "name": "total_stable_debt_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "unbacked_base_units": {
+          "name": "unbacked_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "accrued_to_treasury_scaled_base_units": {
+          "name": "accrued_to_treasury_scaled_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "deficit_base_units": {
+          "name": "deficit_base_units",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liquidity_rate_ray": {
+          "name": "liquidity_rate_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variable_borrow_rate_ray": {
+          "name": "variable_borrow_rate_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "liquidity_index_ray": {
+          "name": "liquidity_index_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "variable_borrow_index_ray": {
+          "name": "variable_borrow_index_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "utilization_ray": {
+          "name": "utilization_ray",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reserve_last_update_timestamp": {
+          "name": "reserve_last_update_timestamp",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "reserve_factor_bps": {
+          "name": "reserve_factor_bps",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "borrowing_enabled": {
+          "name": "borrowing_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "stable_borrow_rate_enabled": {
+          "name": "stable_borrow_rate_enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_active": {
+          "name": "is_active",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "is_frozen": {
+          "name": "is_frozen",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "abi_version": {
+          "name": "abi_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "calculation_version": {
+          "name": "calculation_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "content_hash": {
+          "name": "content_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "captured_at": {
+          "name": "captured_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "market_snapshots_identity_unique": {
+          "name": "market_snapshots_identity_unique",
+          "columns": [
+            {
+              "expression": "chain_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "block_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "calculation_version",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        },
+        "market_snapshots_latest_index": {
+          "name": "market_snapshots_latest_index",
+          "columns": [
+            {
+              "expression": "chain_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "block_number",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "market_snapshots_block_fk": {
+          "name": "market_snapshots_block_fk",
+          "tableFrom": "market_snapshots",
+          "tableTo": "blocks",
+          "columnsFrom": [
+            "chain_id",
+            "block_number"
+          ],
+          "columnsTo": [
+            "chain_id",
+            "block_number"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "market_snapshots_chain_positive": {
+          "name": "market_snapshots_chain_positive",
+          "value": "\"market_snapshots\".\"chain_id\" > 0"
+        },
+        "market_snapshots_block_nonnegative": {
+          "name": "market_snapshots_block_nonnegative",
+          "value": "\"market_snapshots\".\"block_number\" >= 0"
+        },
+        "market_snapshots_state_nonnegative": {
+          "name": "market_snapshots_state_nonnegative",
+          "value": "\"market_snapshots\".\"block_timestamp\" >= 0 and\n          \"market_snapshots\".\"physical_available_liquidity_base_units\" >= 0 and\n          \"market_snapshots\".\"virtual_underlying_balance_base_units\" >= 0 and\n          \"market_snapshots\".\"total_h_token_supply_base_units\" >= 0 and\n          \"market_snapshots\".\"total_variable_debt_base_units\" >= 0 and\n          \"market_snapshots\".\"total_stable_debt_base_units\" >= 0 and \"market_snapshots\".\"unbacked_base_units\" >= 0 and\n          \"market_snapshots\".\"accrued_to_treasury_scaled_base_units\" >= 0 and \"market_snapshots\".\"deficit_base_units\" >= 0 and\n          \"market_snapshots\".\"liquidity_rate_ray\" >= 0 and \"market_snapshots\".\"variable_borrow_rate_ray\" >= 0 and\n          \"market_snapshots\".\"liquidity_index_ray\" >= 0 and \"market_snapshots\".\"variable_borrow_index_ray\" >= 0 and\n          \"market_snapshots\".\"reserve_last_update_timestamp\" >= 0"
+        },
+        "market_snapshots_utilization_valid": {
+          "name": "market_snapshots_utilization_valid",
+          "value": "\"market_snapshots\".\"utilization_ray\" >= 0 and \"market_snapshots\".\"utilization_ray\" <= 1000000000000000000000000000"
+        },
+        "market_snapshots_configuration_valid": {
+          "name": "market_snapshots_configuration_valid",
+          "value": "\"market_snapshots\".\"reserve_factor_bps\" >= 0 and \"market_snapshots\".\"reserve_factor_bps\" <= 10000"
+        },
+        "market_snapshots_content_hash_valid": {
+          "name": "market_snapshots_content_hash_valid",
+          "value": "char_length(\"market_snapshots\".\"content_hash\") = 64"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.raw_logs": {
+      "name": "raw_logs",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "bigserial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "chain_id": {
+          "name": "chain_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_number": {
+          "name": "block_number",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_hash": {
+          "name": "block_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "block_timestamp": {
+          "name": "block_timestamp",
+          "type": "numeric(78, 0)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_hash": {
+          "name": "transaction_hash",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "transaction_index": {
+          "name": "transaction_index",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "log_index": {
+          "name": "log_index",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "contract_address": {
+          "name": "contract_address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "topics": {
+          "name": "topics",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "data": {
+          "name": "data",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "decoded_event_name": {
+          "name": "decoded_event_name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "decoded_payload": {
+          "name": "decoded_payload",
+          "type": "jsonb",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "decoder_version": {
+          "name": "decoder_version",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "source_run_id": {
+          "name": "source_run_id",
+          "type": "bigint",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "inserted_at": {
+          "name": "inserted_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "raw_logs_chain_transaction_log_unique": {
+          "name": "raw_logs_chain_transaction_log_unique",
+          "columns": [
+            {
+              "expression": "chain_id",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "transaction_hash",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            },
+            {
+              "expression": "log_index",
+              "isExpression": false,
+              "asc": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": true,
+          "concurrently": false,
+          "method": "btree",
+          "with": {}
+        }
+      },
+      "foreignKeys": {
+        "raw_logs_source_run_id_indexer_runs_id_fk": {
+          "name": "raw_logs_source_run_id_indexer_runs_id_fk",
+          "tableFrom": "raw_logs",
+          "tableTo": "indexer_runs",
+          "columnsFrom": [
+            "source_run_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {
+        "raw_logs_indexes_nonnegative": {
+          "name": "raw_logs_indexes_nonnegative",
+          "value": "\"raw_logs\".\"transaction_index\" >= 0 and \"raw_logs\".\"log_index\" >= 0"
+        }
+      },
+      "isRLSEnabled": false
+    },
+    "public.system_metadata": {
+      "name": "system_metadata",
+      "schema": "",
+      "columns": {
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "value": {
+          "name": "value",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}

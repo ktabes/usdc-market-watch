@@ -22,17 +22,20 @@ describe('committed migrations', () => {
          where table_schema = 'public'
            and table_name in (
              'blocks', 'indexer_checkpoints', 'indexer_runs', 'ingestion_failures',
-             'market_events', 'raw_logs', 'system_metadata'
+             'hourly_flow_aggregates', 'market_events', 'market_snapshots',
+             'raw_logs', 'system_metadata'
            )
          order by table_name`,
       );
 
       expect(result.rows.map((row) => row.table_name)).toEqual([
         'blocks',
+        'hourly_flow_aggregates',
         'indexer_checkpoints',
         'indexer_runs',
         'ingestion_failures',
         'market_events',
+        'market_snapshots',
         'raw_logs',
         'system_metadata',
       ]);
