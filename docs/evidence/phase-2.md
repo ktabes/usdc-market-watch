@@ -73,6 +73,7 @@ Pinned Phase 1 discovery and the Phase 2 overlapping network backfill passed. Po
 6. **External RPC errors could expose transport URLs.** Retry/failure messages redact URLs before output or storage.
 7. **CI retained the Phase 0 chunk placeholder.** The workflow still set `LOG_BLOCK_CHUNK_SIZE=1000`, which Phase 2 correctly rejects. CI now uses `50`, matching runtime validation and the documented RPC maximum.
 8. **JSONB key canonicalization broke exact replay.** Comparing selected JSONB through `JSON.stringify` treated PostgreSQL's reordered object keys as a conflict. Duplicate validation now uses PostgreSQL JSONB equality for topics and decoded payloads; the real-PostgreSQL exact replay test covers this path.
+9. **The first PostgreSQL 17 gate exposed an actual driver-binding defect.** [CI run 29280720839](https://github.com/ktabes/usdc-market-watch/actions/runs/29280720839) passed formatting, lint, typecheck, build, security, all 64 unit/fixture tests, migrations, connectivity, and both live network tests, but `postgres.js` could not bind a JavaScript array through its JSONB helper. Topics and decoded payloads are now guarded JSON text parameters explicitly cast to `jsonb`; semantic duplicate comparison remains PostgreSQL JSONB equality. The two other persistence failures in that run were downstream because the failed seed transaction correctly rolled back its block and raw log.
 
 ## Pending gate work
 

@@ -35,6 +35,12 @@ export class RawLogConflictError extends Error {
   }
 }
 
+function serializeJsonb(value: unknown): string {
+  const serialized = JSON.stringify(value);
+  if (serialized === undefined) throw new TypeError('cannot serialize undefined as JSONB');
+  return serialized;
+}
+
 export class PostgresIndexerStore implements IndexerStore {
   constructor(private readonly sql: DatabaseClient) {}
 
@@ -113,6 +119,8 @@ export class PostgresIndexerStore implements IndexerStore {
       let insertedCount = 0;
       let duplicateCount = 0;
       for (const record of input.records) {
+        const topicsJson = serializeJsonb([...record.log.topics]);
+        const decodedPayloadJson = serializeJsonb(record.decodedPayload);
         const inserted = await transaction<{ id: string | number }[]>`
           insert into raw_logs (
             chain_id, block_number, block_hash, block_timestamp, transaction_hash,
@@ -122,8 +130,8 @@ export class PostgresIndexerStore implements IndexerStore {
             ${input.chainId}, ${record.log.blockNumber.toString()}, ${record.log.blockHash},
             ${record.block.timestamp.toString()}, ${record.log.transactionHash},
             ${record.log.transactionIndex}, ${record.log.logIndex}, ${record.log.address},
-            ${transaction.json([...record.log.topics])}, ${record.log.data},
-            ${record.event.eventType}, ${transaction.json(record.decodedPayload as never)},
+            ${topicsJson}::jsonb, ${record.log.data},
+            ${record.event.eventType}, ${decodedPayloadJson}::jsonb,
             ${DECODER_VERSION}, ${input.runId}
           )
           on conflict (chain_id, transaction_hash, log_index) do nothing
@@ -141,9 +149,8 @@ export class PostgresIndexerStore implements IndexerStore {
             }[]
           >`
             select block_hash, contract_address, data,
-                   topics = ${transaction.json([...record.log.topics])}::jsonb as topics_match,
-                   decoded_payload = ${transaction.json(record.decodedPayload as never)}::jsonb
-                     as payload_match
+                   topics = ${topicsJson}::jsonb as topics_match,
+                   decoded_payload = ${decodedPayloadJson}::jsonb as payload_match
             from raw_logs
             where chain_id = ${input.chainId}
               and transaction_hash = ${record.log.transactionHash}

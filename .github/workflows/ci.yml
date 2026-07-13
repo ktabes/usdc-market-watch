@@ -6,7 +6,7 @@ on:
   pull_request:
 
 jobs:
-  phase-0-1-checks:
+  phase-0-2-checks:
     runs-on: ubuntu-latest
     services:
       postgres:
