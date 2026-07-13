@@ -1,7 +1,9 @@
 # Phase 1 Gate Evidence
 
-**Status:** IN PROGRESS  
-**Date:** 2026-07-13  
+**Status:** APPROVED
+
+**Date:** 2026-07-13
+
 **Scope:** Protocol discovery and executable specification only. No indexing code is included.
 
 ## Acceptance checklist
@@ -17,7 +19,7 @@
 - [x] Pinned-block network integration test passes.
 - [x] Full Phase 0-1 regression passes from the final implementation tree.
 - [x] Independent protocol review approves addresses, ABI provenance, event semantics, decimals, and formulas.
-- [ ] GitHub Actions passes on the final Phase 1 commit.
+- [x] GitHub Actions passes on the Phase 1 implementation commit.
 
 ## Pinned evidence
 
@@ -70,6 +72,17 @@ The passing tests were the portable PostgreSQL migration test and pinned-block m
 
 The first restricted-process network attempt failed at DNS resolution with `ENOTFOUND rpc.hyperlend.finance`. The same final-tree command passed with network access, so the failed attempt is recorded as an environment failure rather than a product pass.
 
+### GitHub Actions
+
+- Implementation commit: `3c6818fb17cf905f75cb9d261f144c77a4cd6309`
+- Run: [CI 29270641560](https://github.com/ktabes/usdc-market-watch/actions/runs/29270641560)
+- Result: `success`
+- PostgreSQL service: `postgres:17-alpine`, PostgreSQL `17.10`
+- Unit and fixture tests: `45 passed`, no skip
+- Integration tests: `3 passed`, no skip
+- Integration coverage: real PostgreSQL connectivity/migrations, portable PGlite migrations, and exact pinned-block discovery
+- Formatting, linting, type checking, production build, and sensitive-file scan: all passed
+
 ## Findings and fixes
 
 1. **Static Pool implementation was stale.** The documented candidate had bytecode, but the proxy's EIP-1967 slot resolved to a different active implementation. The manifest retains both and treats the pinned slot result as authoritative.
@@ -83,8 +96,15 @@ The first restricted-process network attempt failed at DNS resolution with `ENOT
 
 ## Independent review
 
-The separate reviewer approved the final implementation on 2026-07-13 with no remaining protocol, ABI, address, event, unit/formula, fixture, secret, coverage, or scope blocker. The reviewer independently reran the deterministic and pinned-network suites, compared every recorded fixture log to its archive-RPC receipt, and checked retained ABI signatures against the pinned official core source. Administrative closure remains pending final GitHub Actions evidence.
+The separate reviewer approved the final implementation on 2026-07-13 with no remaining protocol, ABI, address, event, unit/formula, fixture, secret, coverage, or scope blocker. The reviewer independently reran the deterministic and pinned-network suites, compared every recorded fixture log to its archive-RPC receipt, and checked retained ABI signatures against the pinned official core source.
 
-## Pending gate work
+## Known limitations and boundary
 
-The final CI link, final commit, and final approval are recorded after they complete. Phase 2 remains blocked until this record says `APPROVED`.
+- The manifest proves configuration at block `40367898`; upgradeable contracts can change afterward and must be rediscovered/versioned before use.
+- The pinned network test depends on the public archive RPC and can fail for external availability or DNS reasons; deterministic fixtures remain network-independent.
+- Real PostgreSQL was not available in the local run and was explicitly skipped there. PostgreSQL 17.10 migration/connectivity passed in CI.
+- This phase defines protocol identity and semantics only. It includes no log-range planner, database event model, backfill, sync, checkpoint, or scheduler code.
+
+## Approval
+
+Phase 1 is approved based on the final implementation regression, exact pinned-network reproduction, green PostgreSQL-backed CI, and independent protocol/code review. Phase 2 may begin in a subsequent task; no Phase 2 work is included here.
