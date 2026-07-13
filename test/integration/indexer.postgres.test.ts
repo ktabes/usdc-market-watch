@@ -426,5 +426,6 @@ describeWithPostgres('PostgreSQL indexer persistence', () => {
       });
       expect(current?.block.number).toBe(40_367_800n);
     },
+    60_000,
   );
 });
