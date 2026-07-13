@@ -2,7 +2,7 @@
 
 - Date: 2026-07-13
 - Scope: Bootstrap and guardrails only
-- Repository state: Initial local implementation; revision to be recorded after commit
+- Tested implementation revision: `6bbc9d0` (`chore: bootstrap phase 0 guardrails`)
 - Gate status: **NOT YET APPROVED — external PostgreSQL/CI evidence pending**
 
 ## Acceptance criteria
@@ -17,6 +17,7 @@
 - [x] Secret and sensitive-file guardrails are automated.
 - [x] Complete Phase 0 deterministic regression passes after documentation and review fixes.
 - [x] Independent protocol-scope, data-integrity, test, and code review is complete.
+- [x] A literal local clone of committed revision `6bbc9d0` installs from the lockfile and passes the deterministic checks.
 - [ ] GitHub repository exists and its required Phase 0 CI job is green.
 
 ## Validation evidence
@@ -29,7 +30,7 @@ Final local deterministic pass after review fixes:
 | `npm run test:unit`                                       | PASS — 1 file, 10 tests                                                                                      |
 | `npm run test:integration`                                | PARTIAL — portable migration: 1 pass; real PostgreSQL: 1 explicit skip because no local service is installed |
 | `npm run db:generate -- --name=no_schema_change_expected` | PASS — `No schema changes, nothing to migrate`                                                               |
-| Isolated lockfile install and check                       | PASS — `npm ci --offline`; same deterministic check result                                                   |
+| Local `git clone` of `6bbc9d0`                            | PASS — `npm ci --offline`; same deterministic check result                                                   |
 | Local `.env` scanner scenario                             | PASS — ignored `.env` accepted; force-tracked `.env` rejected in reviewer reproduction                       |
 
 The Drizzle ORM runtime dependency was upgraded to 0.45.2 after a registry audit identified a high-severity advisory in the earlier resolved version. A final online `npm audit` reports zero high or critical findings and four moderate development-only findings inherited through Drizzle Kit's deprecated loader. npm's offered fix is an incompatible Drizzle Kit downgrade; the latest stable Drizzle Kit release remains affected. This is recorded rather than hidden or force-fixed.
@@ -37,7 +38,7 @@ The Drizzle ORM runtime dependency was upgraded to 0.45.2 after a registry audit
 ## Known limitations
 
 - The current workstation does not have Docker or `psql`, so the real PostgreSQL suite requires CI or a separately configured database. The test is present, opt-in locally, and mandatory in CI.
-- GitHub CLI authentication for the configured account is invalid and this checkout has no remote, so the new repository and CI run could not be created or observed in this phase attempt.
+- GitHub CLI authentication for the configured account is invalid and this checkout has no remote, so the new repository and CI run could not be created or observed in this phase attempt. The committed revision and a local clone are proven; the remote-hosted path is not.
 - No protocol addresses, ABIs, RPC reads, onchain events, financial calculations, or market-specific tables are implemented. These are Phase 1 or later work.
 - No public deployment has been prepared.
 
