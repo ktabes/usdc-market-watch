@@ -1,6 +1,6 @@
 # Phase 2 Gate Evidence
 
-**Status:** IN PROGRESS
+**Status:** APPROVED
 
 **Date:** 2026-07-13
 
@@ -20,10 +20,10 @@
 - [x] Checkpoint hash mismatch and conflicting raw/block identity fail closed.
 - [x] A live overlapping archive-RPC backfill passes.
 - [x] Portable clean migrations pass.
-- [ ] PostgreSQL persistence/uniqueness tests pass against real PostgreSQL.
+- [x] PostgreSQL persistence/uniqueness tests pass against real PostgreSQL.
 - [x] Full Phase 0-2 local regression passes from the final tree.
 - [x] Independent protocol, data-integrity, test, and code review approves the implementation locally.
-- [ ] GitHub Actions passes on the final Phase 2 commit.
+- [x] GitHub Actions passes on the final Phase 2 implementation commit.
 
 ## Implementation evidence
 
@@ -61,7 +61,16 @@ Pinned Phase 1 discovery and the Phase 2 overlapping network backfill passed. Po
 
 ### Local PostgreSQL limitation
 
-`docker`, `psql`, `postgres`, and `pg_isready` are unavailable in the local environment, so real PostgreSQL is not claimed as a local pass. GitHub Actions must run the migration, connectivity, exact uniqueness, duplicate, typed-value, checkpoint, and block-conflict tests against PostgreSQL 17 before approval.
+`docker`, `psql`, `postgres`, and `pg_isready` are unavailable in the local environment, so real PostgreSQL is not claimed as a local pass. The final evidence therefore comes from GitHub Actions running migrations, connectivity, exact uniqueness, duplicate, typed-value, checkpoint, and conflict tests against PostgreSQL 17.
+
+### Final committed CI gate
+
+- Implementation commit: [`f2607b9`](https://github.com/ktabes/usdc-market-watch/commit/f2607b9f4813ec3cb145ba8b3e65e4113ba6125f)
+- Passing run: [CI 29282975152](https://github.com/ktabes/usdc-market-watch/actions/runs/29282975152)
+- Environment: Ubuntu 24.04, Node 22, PostgreSQL 17.10
+- Static gates: formatting, lint, typecheck, build, and sensitive-file scan passed
+- Unit/fixture tests: 64 passed
+- Integration tests: 11 passed with no skips, including clean migrations, PostgreSQL connectivity, three PostgreSQL persistence/conflict cases, pinned protocol discovery, and overlapping archive-RPC backfill
 
 ## Findings and fixes
 
@@ -75,6 +84,6 @@ Pinned Phase 1 discovery and the Phase 2 overlapping network backfill passed. Po
 8. **JSONB key canonicalization broke exact replay.** Comparing selected JSONB through `JSON.stringify` treated PostgreSQL's reordered object keys as a conflict. Duplicate validation now uses PostgreSQL JSONB equality for topics and decoded payloads; the real-PostgreSQL exact replay test covers this path.
 9. **The first PostgreSQL 17 gate exposed an actual driver-binding defect.** [CI run 29280720839](https://github.com/ktabes/usdc-market-watch/actions/runs/29280720839) passed formatting, lint, typecheck, build, security, all 64 unit/fixture tests, migrations, connectivity, and both live network tests, but `postgres.js` could not bind a JavaScript array through its JSONB helper. Topics and decoded payloads are now guarded JSON text parameters explicitly cast to `jsonb`; semantic duplicate comparison remains PostgreSQL JSONB equality. The two other persistence failures in that run were downstream because the failed seed transaction correctly rolled back its block and raw log.
 
-## Pending gate work
+## Gate decision
 
-The independent reviewer approved the implementation after verifying the two blocking fixes recorded above. Real PostgreSQL evidence, the implementation commit, and CI remain pending. Phase 3 is blocked until this record says `APPROVED`.
+Phase 2 is approved. The independent reviewer found no remaining blocker after the CI-discovered JSONB fix, and the exact implementation commit passed the complete PostgreSQL 17 and live-network gate. Phase 3 may begin as a separate scoped change; no Phase 3 work is included here.

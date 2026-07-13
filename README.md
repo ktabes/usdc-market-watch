@@ -2,7 +2,7 @@
 
 An auditable onchain data system for the single USDC core lending market on HyperLend / HyperEVM. The project prioritizes correctness, provenance, idempotency, and recoverability over breadth or presentation.
 
-**Phase 0 — Bootstrap and guardrails** and **Phase 1 — Protocol discovery and executable specification** are approved. **Phase 2 — Viable, reliable indexer** is implemented and under gate review. Derived snapshots, reconciliation, and any interface remain deferred.
+**Phase 0 — Bootstrap and guardrails**, **Phase 1 — Protocol discovery and executable specification**, and **Phase 2 — Viable, reliable indexer** are approved. Derived snapshots, reconciliation, and any interface remain deferred to their separately gated phases.
 
 ## Phase 0-2 contents
 
@@ -88,4 +88,4 @@ Store any owner-supplied transaction CSVs or wallet lists under the ignored `.pr
 
 ## Current boundary
 
-The versioned manifest records the verified HyperLend core-pool USDC configuration at block `40367898`; it is evidence for that pinned block, not a promise that proxy implementations never change. Phase 2 remains under review, so Phase 3 is blocked. Phase 5 remains blocked until the mandatory Phase 4 owner review.
+The versioned manifest records the verified HyperLend core-pool USDC configuration at block `40367898`; it is evidence for that pinned block, not a promise that proxy implementations never change. Phase 2 is approved, so Phase 3 may begin as a separate scoped change. Phase 5 remains blocked until the mandatory Phase 4 owner review.
