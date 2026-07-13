@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: market_watch
+      POSTGRES_USER: market_watch
+      POSTGRES_PASSWORD: market_watch
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U market_watch -d market_watch']
+      interval: 2s
+      timeout: 5s
+      retries: 15
+    volumes:
+      - market-watch-postgres:/var/lib/postgresql/data
+      - ./docker/postgres-init.sql:/docker-entrypoint-initdb.d/00-create-test-database.sql:ro
+
+volumes:
+  market-watch-postgres:

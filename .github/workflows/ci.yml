@@ -1,0 +1,43 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+jobs:
+  phase-0-checks:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_DB: market_watch_test
+          POSTGRES_USER: market_watch
+          POSTGRES_PASSWORD: market_watch
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U market_watch -d market_watch_test"
+          --health-interval 2s
+          --health-timeout 5s
+          --health-retries 15
+    env:
+      NODE_ENV: test
+      DATABASE_URL: postgresql://market_watch:market_watch@localhost:5432/market_watch_test
+      TEST_DATABASE_URL: postgresql://market_watch:market_watch@localhost:5432/market_watch_test
+      RUN_DATABASE_INTEGRATION_TESTS: 'true'
+      HYPEREVM_RPC_URL: https://rpc.example.test/evm
+      HYPEREVM_CHAIN_ID: '999'
+      CONFIRMATION_LAG: '20'
+      LOG_BLOCK_CHUNK_SIZE: '1000'
+      LOG_LEVEL: info
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run db:migrate
+      - run: npm run check

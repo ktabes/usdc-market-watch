@@ -1,0 +1,44 @@
+{
+  "name": "usdc-market-watch",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Auditable USDC lending-market indexer and reconciliation system for HyperEVM",
+  "type": "module",
+  "engines": {
+    "node": ">=22.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "start": "tsx src/index.ts",
+    "test": "npm run test:unit && npm run test:integration",
+    "test:unit": "vitest run test/unit",
+    "test:integration": "vitest run test/integration",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "security:check": "node scripts/check-sensitive-files.mjs",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm run build && npm run security:check && npm test",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "tsx scripts/migrate.ts",
+    "db:studio": "drizzle-kit studio"
+  },
+  "dependencies": {
+    "dotenv": "^16.6.1",
+    "drizzle-orm": "^0.45.2",
+    "postgres": "^3.4.7",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.3.10",
+    "@eslint/js": "^9.35.0",
+    "@types/node": "^22.18.1",
+    "drizzle-kit": "^0.31.4",
+    "eslint": "^9.35.0",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.42.0",
+    "vitest": "^3.2.4"
+  }
+}
