@@ -1,0 +1,400 @@
+{
+  "schemaVersion": 1,
+  "manifestId": "hyperlend-core-usdc-999-40367898",
+  "generatedAt": "2026-07-13T17:26:41.997Z",
+  "abiVersion": "hyperlend-core-7a2632a-phase1-v1",
+  "source": {
+    "documentationObservedAt": "2026-07-13",
+    "contractAddressesUrl": "https://docs.hyperlend.finance/developer-documentation/contract-addresses",
+    "corePoolsUrl": "https://docs.hyperlend.finance/developer-documentation/core-pools",
+    "dataAndIndexersUrl": "https://docs.hyperlend.finance/developer-documentation/data-and-indexers",
+    "coreRepositoryUrl": "https://github.com/hyperlendx/hyperlend-core",
+    "coreSourceCommit": "7a2632a22ae2e620b69839f9d08fe9419df050d3",
+    "candidateDiscrepancies": [
+      {
+        "name": "PoolImplementation",
+        "publishedCandidate": "0xc19d68383Ed7AB130c15cEad839e67A7Ed9d7041",
+        "validatedAddress": "0xBEBb62C7FF8B96dB4325D9481c44e09A92d49B06",
+        "resolution": "The active implementation is read from the Pool proxy EIP-1967 implementation slot at the pinned block; the static address page lists an older implementation."
+      },
+      {
+        "name": "ProtocolDataProvider",
+        "publishedCandidate": "0x5481bf8d3946E6A3168640c1D7523eB59F055a29",
+        "validatedAddress": "0x4f4d4cA1e0a8A21FE0B460613bEbe917f2eb4326",
+        "resolution": "The static address page candidate lacks the current POOL() interface. The active address is returned by PoolAddressesProvider.getPoolDataProvider() at the pinned block and matches the official core ABI."
+      }
+    ]
+  },
+  "chain": {
+    "name": "HyperEVM",
+    "chainId": 999,
+    "transport": "direct JSON-RPC; runtime URL intentionally omitted"
+  },
+  "pinnedBlock": {
+    "number": "40367898",
+    "hash": "0x449364485d42dc493570f3fa7b8a7bb18301bad94da88588b6bd35196c6498fe",
+    "timestamp": "1783961877"
+  },
+  "contracts": {
+    "pool": {
+      "address": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+      "codeHash": "0xc99e0c7b2e4363170a8cd46114b0aa53706f1df3018ed1d27c4478ca7d388e1c",
+      "codeSizeBytes": 1853
+    },
+    "publishedPoolImplementation": {
+      "address": "0xc19d68383Ed7AB130c15cEad839e67A7Ed9d7041",
+      "codeHash": "0x744e4054aa215d94de0587b917d6e8a284cc7c0737d847b11b3a6989afae29c6",
+      "codeSizeBytes": 21855
+    },
+    "poolImplementation": {
+      "address": "0xBEBb62C7FF8B96dB4325D9481c44e09A92d49B06",
+      "codeHash": "0xa39f056e5e606603984c1ba2dbc65449f58ac1f76ca8447ed30f3022f49dd320",
+      "codeSizeBytes": 21461
+    },
+    "poolAddressesProvider": {
+      "address": "0x72c98246a98bFe64022a3190e7710E157497170C",
+      "codeHash": "0xdabec01ff02f2b5983c5095b31963c19e108624289f9614e0aaf33bbbcbbf0f6",
+      "codeSizeBytes": 6697
+    },
+    "publishedProtocolDataProvider": {
+      "address": "0x5481bf8d3946E6A3168640c1D7523eB59F055a29",
+      "codeHash": "0xd9ebaddbef58766f5291d9c31649bd6bb01009a2634bde11dd54d9b8bcc4fd88",
+      "codeSizeBytes": 9465
+    },
+    "protocolDataProvider": {
+      "address": "0x4f4d4cA1e0a8A21FE0B460613bEbe917f2eb4326",
+      "codeHash": "0xd43b2a55226a6784c2c7108779c4b53a9f8239963a64d2b63385673180f4915d",
+      "codeSizeBytes": 7435
+    },
+    "oracle": {
+      "address": "0xC9Fb4fbE842d57EAc1dF3e641a281827493A630e",
+      "codeHash": "0x400ebe647739db47a81b370b0632e3ebd3aaf35777b52e53ba0c30fd88078708",
+      "codeSizeBytes": 2662
+    },
+    "interestRateStrategy": {
+      "address": "0xD01E9AA0ba6a4a06E756BC8C79579E6cef070822",
+      "codeHash": "0x46271165df1ec5de84517f2eb78e50e3c197606de01e08780e8e7677fbc4a859",
+      "codeSizeBytes": 3997
+    },
+    "usdc": {
+      "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "codeHash": "0xa119f674d44072e257f162aee49c7aba9b7a04fe2e8c84fcefddb366ab6d40cd",
+      "codeSizeBytes": 1798
+    },
+    "hToken": {
+      "address": "0x744E4f26ee30213989216E1632D9BE3547C4885b",
+      "codeHash": "0x7716ae863d108d2bab14377b4cb346ebead6705dfcd0f6ffd1052d11200eee29",
+      "codeSizeBytes": 1853
+    },
+    "variableDebtToken": {
+      "address": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d",
+      "codeHash": "0x7716ae863d108d2bab14377b4cb346ebead6705dfcd0f6ffd1052d11200eee29",
+      "codeSizeBytes": 1853
+    }
+  },
+  "tokens": {
+    "underlying": {
+      "address": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "name": "USDC",
+      "symbol": "USDC",
+      "decimals": 6
+    },
+    "hToken": {
+      "address": "0x744E4f26ee30213989216E1632D9BE3547C4885b",
+      "name": "HyperLend HyperEVM USDC",
+      "symbol": "hHyperEvmUSDC",
+      "decimals": 6,
+      "underlyingAsset": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "pool": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    },
+    "variableDebtToken": {
+      "address": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d",
+      "name": "HyperLend HyperEVM Variable Debt USDC",
+      "symbol": "variableDebtHyperEvmUSDC",
+      "decimals": 6,
+      "underlyingAsset": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "pool": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    }
+  },
+  "oracle": {
+    "baseCurrency": "0x0000000000000000000000000000000000000000",
+    "baseCurrencyUnit": "100000000",
+    "usdcPrice": "99972927"
+  },
+  "reserve": {
+    "decimals": 6,
+    "ltvBps": "6200",
+    "liquidationThresholdBps": "7140",
+    "liquidationBonusBps": "10800",
+    "reserveFactorBps": "1000",
+    "usageAsCollateralEnabled": true,
+    "borrowingEnabled": true,
+    "stableBorrowRateEnabled": false,
+    "isActive": true,
+    "isFrozen": false,
+    "physicalAvailableLiquidity": "11813592417447",
+    "virtualUnderlyingBalance": "11813592417447",
+    "totalATokenSupply": "94226304307122",
+    "totalVariableDebt": "82414145205427",
+    "liquidityRateRay": "57449453220506128379117646",
+    "variableBorrowRateRay": "72982781132281344293042678",
+    "liquidityIndexRay": "1048174917232580551244016514",
+    "variableBorrowIndexRay": "1072624201668258619859430311",
+    "lastUpdateTimestamp": "1783961772",
+    "deficit": "0"
+  },
+  "checks": [
+    {
+      "name": "pool.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "1853 bytes"
+    },
+    {
+      "name": "publishedPoolImplementation.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "21855 bytes"
+    },
+    {
+      "name": "poolImplementation.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "21461 bytes"
+    },
+    {
+      "name": "poolAddressesProvider.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "6697 bytes"
+    },
+    {
+      "name": "publishedProtocolDataProvider.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "9465 bytes"
+    },
+    {
+      "name": "protocolDataProvider.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "7435 bytes"
+    },
+    {
+      "name": "oracle.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "2662 bytes"
+    },
+    {
+      "name": "interestRateStrategy.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "3997 bytes"
+    },
+    {
+      "name": "usdc.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "1798 bytes"
+    },
+    {
+      "name": "hToken.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "1853 bytes"
+    },
+    {
+      "name": "variableDebtToken.codePresent",
+      "status": "PASS",
+      "expected": ">0 bytes",
+      "actual": "1853 bytes"
+    },
+    {
+      "name": "pool.eip1967Implementation",
+      "status": "PASS",
+      "expected": "0xBEBb62C7FF8B96dB4325D9481c44e09A92d49B06",
+      "actual": "0xBEBb62C7FF8B96dB4325D9481c44e09A92d49B06"
+    },
+    {
+      "name": "addressesProvider.pool",
+      "status": "PASS",
+      "expected": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+      "actual": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    },
+    {
+      "name": "addressesProvider.oracle",
+      "status": "PASS",
+      "expected": "0xC9Fb4fbE842d57EAc1dF3e641a281827493A630e",
+      "actual": "0xC9Fb4fbE842d57EAc1dF3e641a281827493A630e"
+    },
+    {
+      "name": "addressesProvider.protocolDataProvider",
+      "status": "PASS",
+      "expected": "0x4f4d4cA1e0a8A21FE0B460613bEbe917f2eb4326",
+      "actual": "0x4f4d4cA1e0a8A21FE0B460613bEbe917f2eb4326"
+    },
+    {
+      "name": "protocolDataProvider.addressesProvider",
+      "status": "PASS",
+      "expected": "0x72c98246a98bFe64022a3190e7710E157497170C",
+      "actual": "0x72c98246a98bFe64022a3190e7710E157497170C"
+    },
+    {
+      "name": "protocolDataProvider.pool",
+      "status": "PASS",
+      "expected": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+      "actual": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    },
+    {
+      "name": "reserveTokens.hToken",
+      "status": "PASS",
+      "expected": "0x744E4f26ee30213989216E1632D9BE3547C4885b",
+      "actual": "0x744E4f26ee30213989216E1632D9BE3547C4885b"
+    },
+    {
+      "name": "reserveTokens.stableDebtTokenDeprecated",
+      "status": "PASS",
+      "expected": "0x0000000000000000000000000000000000000000",
+      "actual": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "name": "reserveTokens.variableDebtToken",
+      "status": "PASS",
+      "expected": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d",
+      "actual": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d"
+    },
+    {
+      "name": "reserveList.USDC.symbol",
+      "status": "PASS",
+      "expected": "USDC",
+      "actual": "USDC"
+    },
+    {
+      "name": "pool.reserveAToken",
+      "status": "PASS",
+      "expected": "0x744E4f26ee30213989216E1632D9BE3547C4885b",
+      "actual": "0x744E4f26ee30213989216E1632D9BE3547C4885b"
+    },
+    {
+      "name": "pool.reserveVariableDebtToken",
+      "status": "PASS",
+      "expected": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d",
+      "actual": "0xD612513cB3b2C52abCD6d4b338374C09AdA4657d"
+    },
+    {
+      "name": "pool.interestRateStrategy",
+      "status": "PASS",
+      "expected": "0xD01E9AA0ba6a4a06E756BC8C79579E6cef070822",
+      "actual": "0xD01E9AA0ba6a4a06E756BC8C79579E6cef070822"
+    },
+    {
+      "name": "USDC.symbol",
+      "status": "PASS",
+      "expected": "USDC",
+      "actual": "USDC"
+    },
+    {
+      "name": "USDC.decimals",
+      "status": "PASS",
+      "expected": "6",
+      "actual": "6"
+    },
+    {
+      "name": "hToken.decimals",
+      "status": "PASS",
+      "expected": "6",
+      "actual": "6"
+    },
+    {
+      "name": "variableDebtToken.decimals",
+      "status": "PASS",
+      "expected": "6",
+      "actual": "6"
+    },
+    {
+      "name": "hToken.underlying",
+      "status": "PASS",
+      "expected": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "actual": "0xb88339CB7199b77E23DB6E890353E22632Ba630f"
+    },
+    {
+      "name": "hToken.pool",
+      "status": "PASS",
+      "expected": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+      "actual": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    },
+    {
+      "name": "variableDebtToken.underlying",
+      "status": "PASS",
+      "expected": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+      "actual": "0xb88339CB7199b77E23DB6E890353E22632Ba630f"
+    },
+    {
+      "name": "variableDebtToken.pool",
+      "status": "PASS",
+      "expected": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+      "actual": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b"
+    },
+    {
+      "name": "reserveConfiguration.decimals",
+      "status": "PASS",
+      "expected": "6",
+      "actual": "6"
+    },
+    {
+      "name": "reserveConfiguration.isActive",
+      "status": "PASS",
+      "expected": "true",
+      "actual": "true"
+    },
+    {
+      "name": "reserveData.totalStableDebtDeprecated",
+      "status": "PASS",
+      "expected": "0",
+      "actual": "0"
+    },
+    {
+      "name": "reserveData.unbackedDeprecated",
+      "status": "PASS",
+      "expected": "0",
+      "actual": "0"
+    },
+    {
+      "name": "reserveData.totalAToken",
+      "status": "PASS",
+      "expected": "94226304307122",
+      "actual": "94226304307122"
+    },
+    {
+      "name": "reserveData.totalVariableDebt",
+      "status": "PASS",
+      "expected": "82414145205427",
+      "actual": "82414145205427"
+    },
+    {
+      "name": "virtualBalance.poolVsDataProvider",
+      "status": "PASS",
+      "expected": "11813592417447",
+      "actual": "11813592417447"
+    },
+    {
+      "name": "deficit.poolVsDataProvider",
+      "status": "PASS",
+      "expected": "0",
+      "actual": "0"
+    },
+    {
+      "name": "oracle.baseCurrencyUnitPositive",
+      "status": "PASS",
+      "expected": ">0",
+      "actual": "100000000"
+    },
+    {
+      "name": "oracle.USDC.pricePositive",
+      "status": "PASS",
+      "expected": ">0",
+      "actual": "99972927"
+    }
+  ]
+}

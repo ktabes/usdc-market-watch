@@ -5,6 +5,7 @@ const validEnvironment: NodeJS.ProcessEnv = {
   NODE_ENV: 'test',
   DATABASE_URL: 'postgresql://user:password@localhost:5432/market_watch',
   HYPEREVM_RPC_URL: 'https://rpc.example.test/evm',
+  HYPEREVM_ARCHIVE_RPC_URL: 'https://archive-rpc.example.test/evm',
   HYPEREVM_CHAIN_ID: '999',
   CONFIRMATION_LAG: '20',
   LOG_BLOCK_CHUNK_SIZE: '1000',
@@ -17,6 +18,7 @@ describe('parseEnv', () => {
       nodeEnv: 'test',
       databaseUrl: validEnvironment.DATABASE_URL,
       hyperEvmRpcUrl: validEnvironment.HYPEREVM_RPC_URL,
+      hyperEvmArchiveRpcUrl: validEnvironment.HYPEREVM_ARCHIVE_RPC_URL,
       hyperEvmChainId: 999,
       confirmationLag: 20,
       logBlockChunkSize: 1000,
@@ -35,6 +37,7 @@ describe('parseEnv', () => {
         expect.arrayContaining([
           expect.stringContaining('DATABASE_URL'),
           expect.stringContaining('HYPEREVM_RPC_URL'),
+          expect.stringContaining('HYPEREVM_ARCHIVE_RPC_URL'),
           expect.stringContaining('HYPEREVM_CHAIN_ID'),
           expect.stringContaining('CONFIRMATION_LAG'),
           expect.stringContaining('LOG_BLOCK_CHUNK_SIZE'),
@@ -46,6 +49,7 @@ describe('parseEnv', () => {
   it.each([
     ['DATABASE_URL', 'https://not-postgres.example'],
     ['HYPEREVM_RPC_URL', 'ftp://rpc.example.test'],
+    ['HYPEREVM_ARCHIVE_RPC_URL', 'ftp://archive-rpc.example.test'],
     ['HYPEREVM_CHAIN_ID', '0'],
     ['CONFIRMATION_LAG', '-1'],
     ['LOG_BLOCK_CHUNK_SIZE', '1.5'],

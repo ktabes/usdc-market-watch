@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 1,
+  "chainId": 999,
+  "pool": "0x00A89d7a5A02160f20150EbEA7a2b5E4879A1A8b",
+  "abiVersion": "hyperlend-core-7a2632a-phase1-v1",
+  "fixtures": [
+    {
+      "event": "Supply",
+      "blockNumber": "40367615",
+      "blockHash": "0x78dca2247134da6f4bab49566890da76b49074b5dd24dbc899e3e2dce2bd94f3",
+      "blockTimestamp": "1783961598",
+      "transactionHash": "0x41f2b1d9e5356d0893b2ab23cfddbd9750a994a99c39171d4a3eddf530f0e9ea",
+      "transactionIndex": 2,
+      "logIndex": 4,
+      "address": "0x00a89d7a5a02160f20150ebea7a2b5e4879a1a8b",
+      "topics": [
+        "0x2b627736bca15cd5381dcf80b0bf11fd197d01a037c52b927a881a10fb73ba61",
+        "0x000000000000000000000000b88339cb7199b77e23db6e890353e22632ba630f",
+        "0x000000000000000000000000c853e78877c758cc43ad152726cb593f03d23030",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "data": "0x000000000000000000000000c853e78877c758cc43ad152726cb593f03d2303000000000000000000000000000000000000000000000000000000003718e0d15",
+      "sourceUrl": "https://hyperevmscan.io/tx/0x41f2b1d9e5356d0893b2ab23cfddbd9750a994a99c39171d4a3eddf530f0e9ea",
+      "expected": {
+        "eventType": "Supply",
+        "reserve": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "user": "0xC853E78877c758cC43ad152726Cb593f03D23030",
+        "onBehalfOf": "0xC853E78877c758cC43ad152726Cb593f03D23030",
+        "amountBaseUnits": "14790036757",
+        "referralCode": 0
+      }
+    },
+    {
+      "event": "Withdraw",
+      "blockNumber": "40367650",
+      "blockHash": "0x9ca66c9db6386c87fd43f9a5f85e7e853d9691185d8f66ea7e3107133dd80d72",
+      "blockTimestamp": "1783961633",
+      "transactionHash": "0xf12e64e43bc9a91c2a4d2f07324e6443b20fb655831b5b6b76be239abf999f48",
+      "transactionIndex": 1,
+      "logIndex": 13,
+      "address": "0x00a89d7a5a02160f20150ebea7a2b5e4879a1a8b",
+      "topics": [
+        "0x3115d1449a7b732c986cba18244e897a450f61e1bb8d589cd2e69e6c8924f9f7",
+        "0x000000000000000000000000b88339cb7199b77e23db6e890353e22632ba630f",
+        "0x000000000000000000000000c853e78877c758cc43ad152726cb593f03d23030",
+        "0x000000000000000000000000c853e78877c758cc43ad152726cb593f03d23030"
+      ],
+      "data": "0x00000000000000000000000000000000000000000000000000000001e9a7e721",
+      "sourceUrl": "https://hyperevmscan.io/tx/0xf12e64e43bc9a91c2a4d2f07324e6443b20fb655831b5b6b76be239abf999f48",
+      "expected": {
+        "eventType": "Withdraw",
+        "reserve": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "user": "0xC853E78877c758cC43ad152726Cb593f03D23030",
+        "to": "0xC853E78877c758cC43ad152726Cb593f03D23030",
+        "amountBaseUnits": "8215062305"
+      }
+    },
+    {
+      "event": "Borrow",
+      "blockNumber": "40367792",
+      "blockHash": "0x9d750a188ad629c2ee2a7c23e7d37ae1aa47ca8458f0153fe68d3d2f94f6a858",
+      "blockTimestamp": "1783961772",
+      "transactionHash": "0xfa4fe80e18e50ae96a0428e064812e93dbf58dd365d3a5438fb17a5743a28880",
+      "transactionIndex": 1,
+      "logIndex": 16,
+      "address": "0x00a89d7a5a02160f20150ebea7a2b5e4879a1a8b",
+      "topics": [
+        "0xb3d084820fb1a9decffb176436bd02558d15fac9b0ddfed8c465bc7359d7dce0",
+        "0x000000000000000000000000b88339cb7199b77e23db6e890353e22632ba630f",
+        "0x000000000000000000000000c701c13f541943ce1b97daa3419d7e977a5b5d3b",
+        "0x0000000000000000000000000000000000000000000000000000000000000000"
+      ],
+      "data": "0x000000000000000000000000c701c13f541943ce1b97daa3419d7e977a5b5d3b000000000000000000000000000000000000000000000000000000000510ff4000000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000003c5eb47e2d8f1d76d379f6",
+      "sourceUrl": "https://hyperevmscan.io/tx/0xfa4fe80e18e50ae96a0428e064812e93dbf58dd365d3a5438fb17a5743a28880",
+      "expected": {
+        "eventType": "Borrow",
+        "reserve": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "user": "0xc701C13F541943CE1b97daA3419d7E977A5B5d3b",
+        "onBehalfOf": "0xc701C13F541943CE1b97daA3419d7E977A5B5d3b",
+        "amountBaseUnits": "85000000",
+        "interestRateMode": 2,
+        "borrowRateRay": "72982781132281344293042678",
+        "referralCode": 0
+      }
+    },
+    {
+      "event": "Repay",
+      "blockNumber": "40367497",
+      "blockHash": "0x209a2206369df888370da25b12a1214c5c0bc603897f04467690c680fd5b7817",
+      "blockTimestamp": "1783961482",
+      "transactionHash": "0xab54e4b90129d3629a538b11b55be08894390bcd0142086fb662b8037e1632ab",
+      "transactionIndex": 3,
+      "logIndex": 12,
+      "address": "0x00a89d7a5a02160f20150ebea7a2b5e4879a1a8b",
+      "topics": [
+        "0xa534c8dbe71f871f9f3530e97a74601fea17b426cae02e1c5aee42c96c784051",
+        "0x000000000000000000000000b88339cb7199b77e23db6e890353e22632ba630f",
+        "0x000000000000000000000000c701c13f541943ce1b97daa3419d7e977a5b5d3b",
+        "0x000000000000000000000000c701c13f541943ce1b97daa3419d7e977a5b5d3b"
+      ],
+      "data": "0x0000000000000000000000000000000000000000000000000000000001c9c3800000000000000000000000000000000000000000000000000000000000000001",
+      "sourceUrl": "https://hyperevmscan.io/tx/0xab54e4b90129d3629a538b11b55be08894390bcd0142086fb662b8037e1632ab",
+      "expected": {
+        "eventType": "Repay",
+        "reserve": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "user": "0xc701C13F541943CE1b97daA3419d7E977A5B5d3b",
+        "repayer": "0xc701C13F541943CE1b97daA3419d7E977A5B5d3b",
+        "amountBaseUnits": "30000000",
+        "useATokens": true
+      }
+    },
+    {
+      "event": "LiquidationCall",
+      "blockNumber": "40361081",
+      "blockHash": "0xef8ccc59118b2bcbd70653732c7eb9102d5504dcbd595706b0b674df60ae9778",
+      "blockTimestamp": "1783955171",
+      "transactionHash": "0xa245128a0e1bb233f30fe458ccf57394fa01fcbacafe13928c2afba1581811c2",
+      "transactionIndex": 6,
+      "logIndex": 47,
+      "address": "0x00a89d7a5a02160f20150ebea7a2b5e4879a1a8b",
+      "topics": [
+        "0xe413a321e8681d831f4dbccbca790d2952b56f977908e45be37335533e005286",
+        "0x0000000000000000000000009fdbda0a5e284c32744d2f17ee5c74b284993463",
+        "0x000000000000000000000000b88339cb7199b77e23db6e890353e22632ba630f",
+        "0x000000000000000000000000e0ad59dd16c86b2a749132e09e36255d3558e37d"
+      ],
+      "data": "0x000000000000000000000000000000000000000000000000000000000000bab30000000000000000000000000000000000000000000000000000000000000059000000000000000000000000caf6437efc2aa920969674253d21b05ce183693c0000000000000000000000000000000000000000000000000000000000000000",
+      "sourceUrl": "https://hyperevmscan.io/tx/0xa245128a0e1bb233f30fe458ccf57394fa01fcbacafe13928c2afba1581811c2",
+      "expected": {
+        "eventType": "LiquidationCall",
+        "collateralAsset": "0x9FDBdA0A5e284c32744D2f17Ee5c74B284993463",
+        "debtAsset": "0xb88339CB7199b77E23DB6E890353E22632Ba630f",
+        "user": "0xe0AD59Dd16c86b2a749132e09e36255D3558e37D",
+        "debtToCoverBaseUnits": "47795",
+        "liquidatedCollateralBaseUnits": "89",
+        "liquidator": "0xcAf6437eFC2Aa920969674253D21b05cE183693C",
+        "receiveAToken": false
+      }
+    }
+  ]
+}

@@ -25,6 +25,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   DATABASE_URL: postgresUrl,
   HYPEREVM_RPC_URL: rpcUrl,
+  HYPEREVM_ARCHIVE_RPC_URL: rpcUrl,
   HYPEREVM_CHAIN_ID: integerString('HYPEREVM_CHAIN_ID', 1),
   CONFIRMATION_LAG: integerString('CONFIRMATION_LAG', 0),
   LOG_BLOCK_CHUNK_SIZE: integerString('LOG_BLOCK_CHUNK_SIZE', 1),
@@ -35,6 +36,7 @@ export interface AppEnv {
   readonly nodeEnv: 'development' | 'test' | 'production';
   readonly databaseUrl: string;
   readonly hyperEvmRpcUrl: string;
+  readonly hyperEvmArchiveRpcUrl: string;
   readonly hyperEvmChainId: number;
   readonly confirmationLag: number;
   readonly logBlockChunkSize: number;
@@ -66,6 +68,7 @@ export function parseEnv(source: NodeJS.ProcessEnv): AppEnv {
     nodeEnv: result.data.NODE_ENV,
     databaseUrl: result.data.DATABASE_URL,
     hyperEvmRpcUrl: result.data.HYPEREVM_RPC_URL,
+    hyperEvmArchiveRpcUrl: result.data.HYPEREVM_ARCHIVE_RPC_URL,
     hyperEvmChainId: result.data.HYPEREVM_CHAIN_ID,
     confirmationLag: result.data.CONFIRMATION_LAG,
     logBlockChunkSize: result.data.LOG_BLOCK_CHUNK_SIZE,

@@ -50,7 +50,11 @@ Environment files, key material, local databases, and the designated `.private/`
 - Real PostgreSQL integration tests: actual network driver, migrations, connectivity, and basic reads.
 - CI: clean Linux checkout, Node 22, PostgreSQL 17, migration command, and the complete check suite.
 
-Network-dependent protocol fixtures are deferred to Phase 1 and must not make deterministic fixture tests flaky.
+Phase 1 records real network logs as immutable fixture inputs so decoding remains deterministic. A separate opt-in pinned-block integration test reproduces the live contract reads without making the fixture suite network-dependent.
+
+## Phase 1 protocol specification
+
+The authoritative address relationships, ABI provenance, normalized event contract, units, formulas, rounding policy, and recorded fixtures are defined in the [Phase 1 protocol specification](protocol/phase-1-specification.md). Source precedence is pinned-block state first, then onchain registries and back-references, then official documentation candidates. The HyperLend HTTP API is secondary and is not required for discovery or correctness.
 
 ## Evidence conventions
 
