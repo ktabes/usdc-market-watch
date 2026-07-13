@@ -1,6 +1,6 @@
 # Phase 3 Gate Evidence
 
-**Status:** IN PROGRESS
+**Status:** APPROVED
 
 **Date:** 2026-07-13
 
@@ -17,11 +17,11 @@
 - [x] Clean migrations pass in the deterministic PostgreSQL-compatible engine.
 - [x] Recorded fixtures reproduce exact hourly totals and both principal-effect paths.
 - [x] Direct pinned archive-RPC reads reproduce the committed authoritative state.
-- [ ] Real PostgreSQL snapshot uniqueness, conflicts, rebuilds, and reads pass.
-- [ ] Clean PostgreSQL migration + live backfill + snapshot + aggregate smoke test passes.
+- [x] Real PostgreSQL snapshot uniqueness, conflicts, rebuilds, and reads pass.
+- [x] Clean PostgreSQL migration + live backfill + snapshot + aggregate smoke test passes.
 - [x] Full Phase 0-3 local regression and Phase 2 idempotency regression pass from the final tree.
 - [x] Independent protocol, data-integrity, tests, and code review approves the implementation locally.
-- [ ] GitHub Actions passes on the final Phase 3 implementation commit.
+- [x] GitHub Actions passes on the final Phase 3 implementation commit.
 
 ## Evidence to date
 
@@ -57,6 +57,19 @@ Pinned discovery, overlapping Phase 2 backfill, and the new authoritative pinned
 
 The mandatory independent review approved the local implementation with no remaining code or specification blocker. Review findings fixed before approval were current provider-registry validation, the provider addresses-provider back-reference, complete block timestamp conflict detection, the documented archive-RPC fallback, evidence counts, README scope wording, and the CI job label.
 
-## Pending gate work
+### GitHub Actions and PostgreSQL 17
 
-Real PostgreSQL and combined live smoke evidence, the implementation commit, and CI remain pending. Railway production migrations and historical backfill remain blocked until this record says `APPROVED`. Phase 4 is blocked until the Phase 3 gate passes.
+Implementation commit `7124f09` passed [GitHub Actions run 29286498822](https://github.com/ktabes/usdc-market-watch/actions/runs/29286498822):
+
+```text
+Unit/fixture test files  15 passed
+Unit/fixture tests       86 passed
+Integration test files   7 passed
+Integration tests        15 passed
+```
+
+The integration total includes all six real-PostgreSQL tests, PostgreSQL connectivity, clean portable migrations, the Phase 2 memory and overlapping live-network idempotency paths, pinned discovery, the authoritative snapshot, and the combined clean migration + live backfill + snapshot + aggregate rebuild smoke path.
+
+## Gate result
+
+Phase 3 is approved. Railway production migrations and historical backfill were intentionally not applied during the code gate and remain a separate operator action. Phase 4 may begin as a separately scoped change.
